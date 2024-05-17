@@ -30,9 +30,34 @@ let pokemonRepository = (function(){
         }
     };
 
+    function addListItem(pokemon) {
+        let pokemonList = document.querySelector('.pokemon-list');
+        let listItem = document.createElement('li');
+        let button = document.createElement('button');
+        button.innerText = pokemon.name;
+        button.classList.add('primary-button');
+        listItem.appendChild(button);
+        pokemonList.appendChild(listItem);
+        //Event listener
+        newEvent(button, pokemon); 
+    }
+
+    //This function is called in the button event listener. 
+    function showDetails(pokemon) {
+    }
+
+    /*Create an even outside of the addListItem function
+    This needs to be a function itself so that it can be called*/
+    function newEvent(button, pokemon){
+        button.addEventListener('click', function(showDetails){
+            console.log(pokemon.name);
+        });
+    }
+
     return {
         add: add,
-        getAll: getAll
+        getAll: getAll,
+        addListItem: addListItem
         }
     } ) ();
 
@@ -41,12 +66,7 @@ console.log(pokemonRepository.getAll());
 
 //access the results from the key 'getAll' within the 'pokemonRepository' object
     pokemonRepository.getAll().forEach(function (pokemon) {
-        if (pokemon.height > 5) {
-            document.write("<p>" + pokemon.name + " (height: " + pokemon.height + ") - wow, that's big! " + "</p>");
-        }
-        else {
-            document.write("<p>" + pokemon.name + " (height: " + pokemon.height + ") " + "</p>");
-        }
+        pokemonRepository.addListItem(pokemon);
     });
 
 
