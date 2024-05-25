@@ -1,34 +1,19 @@
-let pokemonRepository = (function(){
-    let pokemonList = [
-        {
-            name: 'Bulbasaur',
-            type: ['grass', 'poison'],
-            height: 7
-        },
-        {
-            name: 'Squirtle',
-            type: 'water',
-            height: 5
-        },
-        {
-            name: 'Pidgey',
-            type: ['normal', 'flying'],
-            height: 3
-        }
-    ];
+let pokemonRepository = (function () {
+    let pokemonList = [];
+    let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
 
-    function getAll(){
+    function getAll() {
         return pokemonList;
     }
 
     function add(pokemon){
-        if (typeof pokemon === 'object'){
-        pokemonList.push(pokemon);
-        }
-        else {
-            console.log('Not valid');
-        }
-    };
+         if (typeof pokemon === 'object'){
+         pokemonList.push(pokemon);
+         }
+         else {
+             console.log('Not valid');
+         }
+     };
 
     function addListItem(pokemon) {
         let pokemonList = document.querySelector('.pokemon-list');
@@ -39,35 +24,71 @@ let pokemonRepository = (function(){
         listItem.appendChild(button);
         pokemonList.appendChild(listItem);
         //Event listener
-        newEvent(button, pokemon); 
-    }
-
-    //This function is called in the button event listener. 
-    function showDetails(pokemon) {
+        newEvent(button, pokemon);
     }
 
     /*Create an even outside of the addListItem function
     This needs to be a function itself so that it can be called*/
-    function newEvent(button, pokemon){
-        button.addEventListener('click', function(showDetails){
-            console.log(pokemon.name);
+    function newEvent(button, pokemon) {
+        button.addEventListener('click', function (showDetails) {
+            console.log(pokemon);
+        });
+    }
+
+    function loadList() {
+        return fetch(apiUrl).then(function (response) {
+            return response.json();
+        }).then(function (json) {
+            json.results.forEach(function (item) {
+                let pokemon = {
+                    name: item.name,
+                    detailsUrl: item.url
+                };
+                add(pokemon);
+            });
+        }).catch(function (e) {
+            console.error(e);
+        });
+    }
+
+    function loadDetails(item) {
+        let url = item.detailsUrl;
+        return fetch(url).then(function (response) {
+            return response.json();
+        }).then(function (details) {
+            // Now we add the details to the item
+            item.imageUrl = details.sprites.front_default;
+            item.height = details.height;
+            item.types = details.types;
+        }).catch(function (e) {
+            console.error(e);
+        });
+    }
+
+     //This function is called in the button event listener. 
+     function showDetails(item) {
+        pokemonRepository.loadDetails(item).then(function () {
+            console.log(item);
         });
     }
 
     return {
         add: add,
         getAll: getAll,
-        addListItem: addListItem
-        }
-    } ) ();
+        addListItem: addListItem,
+        loadList: loadList,
+        loadDetails: loadDetails,
+        showDetails: showDetails
+    }
+})();
 
-//Check that the correct info is being returned
-console.log(pokemonRepository.getAll());
-
-//access the results from the key 'getAll' within the 'pokemonRepository' object
+//loadList gets the data from the repository and uses the forEach function on this data
+pokemonRepository.loadList().then(function () {
     pokemonRepository.getAll().forEach(function (pokemon) {
         pokemonRepository.addListItem(pokemon);
     });
+})
+
 
 
 
