@@ -30,8 +30,8 @@ let pokemonRepository = (function () {
     /*Create an even outside of the addListItem function
     This needs to be a function itself so that it can be called*/
     function newEvent(button, pokemon) {
-        button.addEventListener('click', function (showDetails) {
-            console.log(pokemon);
+        button.addEventListener('click', function (event) {
+            showDetails(pokemon);
         });
     }
 
