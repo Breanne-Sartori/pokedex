@@ -31,7 +31,7 @@ let pokemonRepository = (function () {
     This needs to be a function itself so that it can be called*/
     function newEvent(button, pokemon) {
         button.addEventListener('click', function (event) {
-            showDetails(pokemon);
+            showDetails(pokemon); 
         });
     }
 
