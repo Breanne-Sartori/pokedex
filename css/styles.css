@@ -124,10 +124,9 @@ body {
   margin-bottom: 0;
 }
 
-.modal-image{
+.modal-image {
   display: inline-block;
   align-items: center;
   justify-content: center;
-  width: 150px;
-  height: 100px;
+  height: 200px;
 }
