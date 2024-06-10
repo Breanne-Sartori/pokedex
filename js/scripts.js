@@ -6,14 +6,14 @@ let pokemonRepository = (function () {
         return pokemonList;
     }
 
-    function add(pokemon){
-         if (typeof pokemon === 'object'){
-         pokemonList.push(pokemon);
-         }
-         else {
-             console.log('Not valid');
-         }
-     };
+    function add(pokemon) {
+        if (typeof pokemon === 'object') {
+            pokemonList.push(pokemon);
+        }
+        else {
+            console.log('Not valid');
+        }
+    };
 
     function addListItem(pokemon) {
         let pokemonList = document.querySelector('.pokemon-list');
@@ -31,7 +31,7 @@ let pokemonRepository = (function () {
     This needs to be a function itself so that it can be called*/
     function newEvent(button, pokemon) {
         button.addEventListener('click', function (event) {
-            showDetails(pokemon); 
+            showDetails(pokemon);
         });
     }
 
@@ -65,10 +65,50 @@ let pokemonRepository = (function () {
         });
     }
 
-     //This function is called in the button event listener. 
-     function showDetails(item) {
+    //This function is called in the button event listener. 
+    function showDetails(item) {
         pokemonRepository.loadDetails(item).then(function () {
             console.log(item);
+
+            let modalContainer = document.querySelector('#modal-container');
+
+            //Clear existing modal content
+            modalContainer.innerHTML = '';  
+
+            let modal = document.createElement('div');
+            modal.classList.add('modal');
+
+            //Add new modal content
+            let closeButton = document.createElement('button');
+            closeButton.classList.add('modal-close');
+            closeButton.innerText = 'Close';
+            closeButton.addEventListener('click', hideModal);
+
+            let titleElement = document.createElement('h1');
+            titleElement.innerText = title;
+            
+            let contentElement = document.createElement('p');
+            contentElement.innerText = text;
+
+            let imageElement = document.createElement('img');
+            imageElement = img;
+
+            modal.appendChild(closeButton);
+            modal.appendChild(titleElement);
+            modal.appendChild(contentElement);
+            modal.appendChild(imageElement);
+            modalContainer.appendChild(modal);
+
+            modalContainer.classList.add('is-visible');
+
+
+            //Create the function to hide the modal
+            function hideModal(){
+                modalContainer.classList.remove('is-visible');
+
+            }
+
+
         });
     }
 
@@ -78,8 +118,9 @@ let pokemonRepository = (function () {
         addListItem: addListItem,
         loadList: loadList,
         loadDetails: loadDetails,
-        showDetails: showDetails
+        showDetails: showDetails,
     }
+    
 })();
 
 //loadList gets the data from the repository and uses the forEach function on this data
