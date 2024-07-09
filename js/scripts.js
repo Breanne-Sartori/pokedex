@@ -20,7 +20,9 @@ let pokemonRepository = (function () {
         let listItem = document.createElement('li');
         let button = document.createElement('button');
         button.innerText = pokemon.name;
-        button.classList.add('primary-button');
+        button.classList.add('btn');
+        button.setAttribute('data-target', '#exampleModal');
+        button.setAttribute('data-toggle', 'modal');
         listItem.appendChild(button);
         listItem.classList.add('list-group-item');
         pokemonList.appendChild(listItem);
@@ -70,11 +72,46 @@ let pokemonRepository = (function () {
     function showDetails(item) {
         pokemonRepository.loadDetails(item).then(function () {
             console.log(item);
+            //Start of Bootstrap Modal
+            let modalBody = ('.modal-body');
+            let modalTitle = ('.modal-title');
 
-            let modalContainer = document.querySelector('#modal-container');
+            //Clear existing content
+            modalTitle.empty();
+            modalBody.empty();
+
+            let titleElement = document.createElement('h1');
+            titleElement.innerText = item.name;
+
+            let imageElement = document.createElement('img');
+            imageElement.src = item.imageUrl;
+            imageElement.classList.add('modal-image');
+
+            let heightContent = document.createElement('p');
+            heightContent.innerText = "Height: " + item.height;
+
+            let typeHeading = document.createElement('p');
+            typeHeading.innerText = "Types:";
+
+            let typeList = document.createElement('ul');
+            item.types.forEach((type) => {
+                let listItem = document.createElement('li');
+                listItem.innerText = type.type.name;
+                typeList.appendChild(listItem);
+            });
+
+            modalTitle.append(titleElement);
+            modalBody.append(imageElement);
+            modalBody.append(heightContent);
+            modalBody.append(typeHeading);
+            modalBody.append(typeList);
+
+            //Old Modal
+           /* let modalContainer = document.querySelector('#modal-container');
 
             //Clear existing modal content
             modalContainer.innerHTML = '';
+            
 
             let modal = document.createElement('div');
             modal.classList.add('modal');
@@ -136,7 +173,7 @@ let pokemonRepository = (function () {
                 if (target === modalContainer) {
                     hideModal();
                 }
-            });
+            });*/
 
         });
     }
