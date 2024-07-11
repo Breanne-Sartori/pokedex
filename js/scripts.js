@@ -73,8 +73,8 @@ let pokemonRepository = (function () {
         pokemonRepository.loadDetails(item).then(function () {
             console.log(item);
             //Start of Bootstrap Modal
-            let modalBody = ('.modal-body');
-            let modalTitle = ('.modal-title');
+            let modalBody = $('.modal-body');
+            let modalTitle = $('.modal-title');
 
             //Clear existing content
             modalTitle.empty();
@@ -105,76 +105,6 @@ let pokemonRepository = (function () {
             modalBody.append(heightContent);
             modalBody.append(typeHeading);
             modalBody.append(typeList);
-
-            //Old Modal
-           /* let modalContainer = document.querySelector('#modal-container');
-
-            //Clear existing modal content
-            modalContainer.innerHTML = '';
-            
-
-            let modal = document.createElement('div');
-            modal.classList.add('modal');
-
-            //Add new modal content
-            let closeButton = document.createElement('button');
-            closeButton.classList.add('modal-close');
-            closeButton.innerText = 'Close';
-            closeButton.addEventListener('click', hideModal);
-
-            let titleElement = document.createElement('h1');
-            titleElement.innerText = item.name;
-
-            let heightContent = document.createElement('p');
-            heightContent.innerText = "Height: " + item.height;
-
-            let typeHeading = document.createElement('p');
-            typeHeading.innerText = "Types:";
-
-            let typeList = document.createElement('ul');
-            item.types.forEach((type) => {
-                let listItem = document.createElement('li');
-                listItem.innerText = type.type.name;
-                typeList.appendChild(listItem);
-            });
-
-            let imageElement = document.createElement('img');
-            imageElement.src = item.imageUrl;
-            imageElement.classList.add('modal-image');
-
-            modal.appendChild(closeButton);
-            modal.appendChild(titleElement);
-            modal.appendChild(imageElement);
-            modal.appendChild(heightContent);
-            modal.appendChild(typeHeading);
-            modal.appendChild(typeList);
-            modalContainer.appendChild(modal);
-
-            modalContainer.classList.add('is-visible');
-
-
-            //Create the function to hide the modal
-            function hideModal() {
-                modalContainer.classList.remove('is-visible');
-
-            }
-
-            //Close the modal via the esc key
-            window.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' &&
-                    modalContainer.classList.contains('is-visible')) {
-                    hideModal();
-                }
-            });
-
-            //Close the modal by clicking outside of it
-            modalContainer.addEventListener('click', (e) => {
-                let target = e.target;
-                if (target === modalContainer) {
-                    hideModal();
-                }
-            });*/
-
         });
     }
 
